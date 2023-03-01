@@ -21,40 +21,40 @@ pyChemiQ
    :maxdepth: 2
    :caption: pyChemiQ安装
    
-   01pyChemiQ安装/install.rst
+   01install/install.rst
 
 
 .. toctree::
    :maxdepth: 2
    :caption: 快速入门
    
-   02快速入门/quickstart.rst
+   02start/quickstart.rst
 
 
 .. toctree::
    :maxdepth: 2
    :caption: 基础教程
    
-   03基础教程/hamiltonian.rst
-   03基础教程/mapping.rst
-   03基础教程/ansatz.rst
-   03基础教程/algorithm.rst
-   03基础教程/function.rst
+   03basis/hamiltonian.rst
+   03basis/mapping.rst
+   03basis/ansatz.rst
+   03basis/algorithm.rst
+   03basis/function.rst
 
 .. toctree::
    :maxdepth: 2
    :caption: 进阶教程
    
-   04进阶教程/fermionpauliop.rst
-   04进阶教程/optimizer.rst
+   04advanced/fermionpauliop.rst
+   04advanced/optimizer.rst
 
 .. toctree::
    :maxdepth: 2
    :caption: 理论背景
    
-   05理论背景/computationalchemistry.rst
-   05理论背景/theoreticalbackground.rst
-   05理论背景/vqeintroduction.rst
+   05theory/computationalchemistry.rst
+   05theory/theoreticalbackground.rst
+   05theory/vqeintroduction.rst
 
 .. toctree::
    :maxdepth: 2
@@ -67,5 +67,5 @@ pyChemiQ
    :maxdepth: 2
    :caption: 交流与反馈
    
-   07交流与反馈/feedback.rst
+   07FAQ/feedback.rst
    
