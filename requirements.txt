@@ -1,7 +1,9 @@
 Markdown==3.4.1
+graphviz==2.50.0
 MarkupSafe==2.1.1
 matplotlib==3.2.2
 Sphinx==5.3.0
+sphinx-autoapi==2.0.1
 sphinx-markdown-tables==0.0.17
 sphinx-material==0.0.35
 sphinx-press-theme==0.8.0
