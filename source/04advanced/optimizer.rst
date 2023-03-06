@@ -6,7 +6,7 @@
 .. code-block::
 
     # 用method指定经典优化器与初始参数并迭代求解
-    #method = "NELDER_MEAD"
+    #method = "NELDER-MEAD"
     #method = "POWELL"
     #method = "COBYLA"
     #method = "L-BFGS-B"

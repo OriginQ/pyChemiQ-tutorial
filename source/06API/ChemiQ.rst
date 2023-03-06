@@ -15,6 +15,7 @@ Classes
    :param QMachineType machine_type: 输入量子模拟器类型。目前pyChemiQ仅支持单线程CPU，即QMachineType.CPU_SINGLE_THREAD。含噪声量子模拟器的接入还在进行中。该类的介绍详见 `pyqpanda.QMachineType <https://pyqpanda-toturial.readthedocs.io/zh/latest/autoapi/pyqpanda/index.html#pyqpanda.QMachineType>`_ 。
 
    :param MappingType mapping_type: 输入映射类型。详见pychemiq.Transform.Mapping。
+   :param int n_elec: 输入分子体系的电子数。
    :param int pauli_size: 输入泡利哈密顿量的项数。
    :param int n_qubits: 输入计算所需要的总量子比特数。
 

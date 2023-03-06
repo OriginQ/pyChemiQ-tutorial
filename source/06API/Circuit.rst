@@ -51,7 +51,7 @@ Functions
 
 
 
-   .. py:function:: UserDefine(n_electrons, circuit=None, fermion=None, option=None, chemiq=None)
+   .. py:function:: UserDefine(n_electrons, circuit=None, fermion=None, chemiq=None)
 
       使用用户自定义的方式构建量子线路拟设。
 

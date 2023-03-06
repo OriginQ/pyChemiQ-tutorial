@@ -11,11 +11,11 @@ Module Contents
 Functions
 ~~~~~~~~~~~
 
-.. py:function:: vqe_solver(method=DEF_NELDER_MEAD, ansatz=None, pauli=None, init_para=None, chemiq=None, Learning_rate=0.1, Xatol=0.0001, Fatol=0.0001, MaxFCalls=200, MaxIter=200)
+.. py:function:: vqe_solver(method="NELDER-MEAD", ansatz=None, pauli=None, init_para=None, chemiq=None, Learning_rate=0.1, Xatol=0.0001, Fatol=0.0001, MaxFCalls=200, MaxIter=200)
 
    该类为VQE求解器，在参数中需要指定经典优化器方法、拟设、分子的泡利哈密顿量、初始参数、chemiq类。
 
-   :param str method: 指定经典优化器方法。目前pyChemiQ支持的方法有NELDER-MEAD、POWELL、COBYLA、L-BFGS-B、SLSQP和Gradient-Descent。
+   :param str method: 指定经典优化器方法。目前pyChemiQ支持的方法有NELDER-MEAD、POWELL、COBYLA、L-BFGS-B、SLSQP和Gradient-Descent。若不指定，默认使用NELDER-MEAD优化器。
    :param AbstractAnsatz ansatz: 指定拟设类。详见pychemiq.Circuit.Ansatz。
    :param PauliOperator pauli: 指定分子的泡利哈密顿量。泡利算符类。详见pychemiq.PauliOperator。
    :param list[float] init_para: 指定初始参数。

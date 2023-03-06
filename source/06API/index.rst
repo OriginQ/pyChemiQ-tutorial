@@ -8,10 +8,10 @@ Modules：
 .. toctree::
    :titlesonly:
 
-   /06API/Transform/index
-   /06API/Circuit/index
-   /06API/Optimizer/index
-   /06API/Utils/index
+   /06API/Transform.rst
+   /06API/Circuit.rst
+   /06API/Optimizer.rst
+   /06API/Utils.rst
 
 
 Classes：

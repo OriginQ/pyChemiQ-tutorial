@@ -11,6 +11,9 @@ Classes
 
    :return: 泡利算符类。
 
+   .. py:function:: get_max_index()
+
+   得到最大索引值。如果是空的泡利算符项调用get_max_index()接口则返回SIZE_MAX（具体值取决于操作系统），否则返回其最大索引值。
 
    .. py:function:: data()
 

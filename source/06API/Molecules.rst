@@ -9,7 +9,7 @@ Classes
    初始化分子的电子结构参数，包括电荷、基组、原子坐标、自旋多重度等
 
    :param str geometry: 输入分子中原子的类型和坐标。可以为字符串类型或者字符串列表。例如：geometry = "H 0 0 0,H 0 0 0.74" 或者 geometry = ["H 0 0 0","H 0 0 0.74"]
-   :param str basis: 输入执行计算的基组水平。目前支持的基组为sto-3g、sto-6g、3-21、6-31、6-311等高斯型函数基组。不支持极化与弥散基组。
+   :param str basis: 输入执行计算的基组水平。目前支持的基组为MINI、sto-3G、sto-6G、3-21G、6-31G等高斯型函数基组。不支持极化与弥散基组。
    :param int multiplicity: 输入分子体系的自旋多重度。与分子总自旋量子数的关系为M=2S+1。目前pyChemiQ只支持RHF单重态计算，UHF以及ROHF正在开发中。
    :param int charge: 输入分子体系的电荷。
    :param list[int] active: 分子体系的活性空间，格式为[m,n]，其中m为活性轨道的数目，n为活性电子的数目。默认不设置活性空间。

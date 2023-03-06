@@ -22,7 +22,7 @@ Classes
 
       .. py:attribute:: Parity
 
-      .. py:attribute:: SegementParity
+      .. py:attribute:: SegmentParity
 
 
 Functions
@@ -58,9 +58,9 @@ Functions
 
 
 
-   .. py:function:: segement_parity(fermion)
+   .. py:function:: segment_parity(fermion)
 
-      将输入的费米子算符通过segement_parity变换映射成为泡利算符。
+      将输入的费米子算符通过segment_parity变换映射成为泡利算符。
 
       :param FermionOperator fermion: 输入待映射的费米子算符。
 

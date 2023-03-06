@@ -132,7 +132,16 @@
    plus = a + b
    minus = a - b
    muliply = a * b
-   print(a)
+   print(plus)
+
+  在实际使用的时候，我们常常需要知道该泡利算符项操作了多少个量子比特，这时候我们通过调用泡利算符类的接口get_max_index()得到。 如果是空的泡利算符项调用get_max_index()接口则返回SIZE_MAX（具体值取决于操作系统），否则返回其最大索引值。在下面的例子里，前者输出的值为1，后者输出的值为6。
+
+.. code-block::
+
+   a = PauliOperator("Z0 Z1", 2)
+   b = PauliOperator("X5 Y6", 3)
+   print(a.get_max_index())
+   print(b.get_max_index())
 
 
   此外，泡利算符类也提供了data接口，可以返回泡利算符内部维护的数据。
@@ -141,4 +150,5 @@
 
    print("data = {}".format(a.data()))
    data = [(({0: 'Z', 1: 'Z'}, 'Z0 Z1'), (2+0j))]
+
 
