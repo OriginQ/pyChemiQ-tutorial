@@ -1,7 +1,7 @@
 接口介绍
 =============
 
-以下为pyChemiQ所有接口的详细参数介绍。
+以下为pyChemiQ所有接口及配置文件的详细参数介绍。
 
 Modules：
 
@@ -24,3 +24,10 @@ Classes：
    /06API/FermionOperator.rst
    /06API/PauliOperator.rst
 
+
+Configuration settings：
+
+.. toctree::
+   :titlesonly:
+
+   /06API/Configs.rst
