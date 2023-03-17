@@ -57,10 +57,11 @@ pyChemiQ
    05theory/vqeintroduction.rst
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: API
 
    06API/index
+   06API/Configs.rst
 
 
 .. toctree::

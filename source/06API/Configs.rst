@@ -1,7 +1,7 @@
 配置文件参数介绍
 ============================
 
-  除了调用pyChemiQ的基础接口进行计算，您也可以设置配置文件直接运算，更多高级功能开放在配置文件里使用。您可以通过使用内置优化方法缩短量子线路，减少运行时间，还有切片数设置、拟设截断、MP2初参设置等丰富功能的接口可调用。
+  除了调用pyChemiQ的基础接口进行计算，您也可以设置配置文件直接运算，更多高级功能开放在配置文件里使用。您可以通过使用内置优化方法缩短量子线路，减少运行时间，还有切片数设置、拟设截断、MP2初参设置等丰富功能的接口可调用。如果您想试用pyChemiQ这些高级功能，请前往 `官网 <https://qcloud.originqc.com.cn/chemistryIntroduce>`_ 申请授权码。
 
   配置文件通常为.chemiq为后缀的文件，主要分五个方面进行设置，详细的参数介绍及默认参数如下：
 
@@ -16,11 +16,11 @@
 
     - console_level :  设置终端打印日志级别， 0为输出，6为不输出。默认值为0。
 
+    - logfile_name : 设置日志文件名，默认为空。例如，设置的日志名为chemiq.log, 则最终输出的日志名为chemiq-当天日期.log。只有设置了日志文件名，才可以输出日志文件。
+
     - logfile_level : 设置文件输出日志级别， 0为输出，6为不输出。默认值为6。
 
-    - logfile_name : 设置日志文件名，默认日志名为chemiq-当天日期.log。例如chemiq-2023-03-15.log
-
-    - license : 设置授权序列号。
+    - license : 设置授权序列号。请前往 `官网 <https://qcloud.originqc.com.cn/chemistryIntroduce>`_ 申请授权码。
 
 2. 分子参数设置(Molecule specification)
     - geoms : 设置分子坐标，其中原子类型和原子坐标以空格进行分隔。
@@ -92,9 +92,140 @@
 
     - delta_r : 设置差分坐标大小，大于0，默认0.001。
 
+下面我们给出一个使用配置文件计算氢分子单点能的案例。基组使用sto-3G，拟设使用UCCSD，映射使用BK，优化器使用NELDER-MEAD。初参为MP2。
+
+.. code-block::
+
+    general = {
+        task    = energy
+        backend = CPU_SINGLE_THREAD
+        license = XXXXX
+    }
+
+    mole = {
+        geoms = {
+            H 0 0 0
+            H 0 0 0.74
+        }
+        bohr    = F
+        charge  = 0
+        spin    = 1 
+        basis   = sto-3G
+        pure    = T 
+        local   = F 
+    }
+
+    ansatz = UCC {
+        excited_level = SD
+        restricted    = T
+        cutoff        = T
+        mapping       = BK
+        reorder       = F
+    }
+
+    optimizer = NELDER_MEAD {
+        learning_rate                 = 0.1 
+        init_para_type                = MP2
+        slices                        = 1 
+        iters                         = 1000 
+        fcalls                        = 1000 
+        xatol                         = 1e-6 
+        fatol                         = 1e-6 
+    }
 
 
+第二个示例我们计算氢化锂分子的势能曲线。基组使用sto-3G，活性空间使用[2，2]，拟设使用自定义线路，映射使用parity，优化器使用SLSQP。初参为零。
+
+.. code-block::
+
+    general = {
+        task    = PES
+        backend = CPU_SINGLE_THREAD
+        license = XXXXX
+    }
+
+    mole = {
+        geoms = {
+            H 0 0 0.38
+            Li 0 0 -1.13
+        }
+        bohr    = F
+        charge  = 0
+        spin    = 1 
+        basis   = sto-3G
+        pure    = T 
+        local   = F 
+        active = 2,2
+    }
+
+    ansatz = User-define {
+        circuit = {
+            QINIT 4
+            CREG 4
+            CNOT q[1],q[0]
+            CNOT q[2],q[1]
+            CNOT q[3],q[2]
+            H q[1]
+            H q[3]
+            S q[1]
+    }
+        mapping       = P
+        reorder       = T
+    }
+
+    optimizer = SLSQP {
+        learning_rate                 = 0.1 
+        init_para_type                = Zero
+        slices                        = 1  
+        iters                         = 1000 
+        fcalls                        = 1000 
+        xatol                         = 1e-6 
+        fatol                         = 1e-6 
+    }
 
 
+第三个示例我们计算氢化锂分子的分子动力学轨迹。基组使用3-21G，活性空间使用[4，4]，拟设使用Hardware-efficient，映射使用JW，优化器使用L-BFGS-B。初参为随机数。
 
+.. code-block::
 
+    general = {
+        task    = MD
+        backend = CPU_SINGLE_THREAD
+        license = XXXXX
+    }
+
+    mole = {
+        geoms = {
+            H 0 0 0.38
+            Li 0 0 -1.13
+        }
+        bohr    = F
+        charge  = 0
+        spin    = 1 
+        basis   = 3-21G
+        pure    = T 
+        local   = F 
+        active = 4,4
+    }
+
+    ansatz = Hardware-efficient {
+        mapping       = JW
+        reorder       = F
+    }
+
+    optimizer = L-BFGS-B {
+        learning_rate                 = 0.1 
+        init_para_type                = Random
+        slices                        = 1  
+        iters                         = 1000 
+        fcalls                        = 1000 
+        xatol                         = 1e-6 
+        fatol                         = 1e-6 
+    }
+
+    MD = 1 {
+        velocity           = 0.0
+        step_size          = 0.2
+        step_number        = 100 
+        delta_r            = 0.001
+    }

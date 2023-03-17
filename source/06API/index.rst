@@ -25,9 +25,3 @@ Classes：
    /06API/PauliOperator.rst
 
 
-Configuration settings：
-
-.. toctree::
-   :titlesonly:
-
-   /06API/Configs.rst
