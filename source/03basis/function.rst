@@ -28,8 +28,6 @@
     import numpy as np
     from pyscf import gto, scf, cc
     import matplotlib.pyplot as plt
-    %matplotlib inline
-    #如果未使用jupyter notebook编译器，请注释掉最后一行
 
     # 进行势能面扫描：先初始化参数，再构建不同键长下的分子体系，进行多次单点能计算
     basis = 'sto-3g'
