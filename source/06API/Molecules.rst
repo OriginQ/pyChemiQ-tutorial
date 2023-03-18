@@ -72,3 +72,87 @@ Classes
       得到初始化后的分子体系的哈密顿量
 
 
+**接口示例：**
+
+.. code:: 
+
+    from pychemiq import Molecules
+    multiplicity = 1
+    charge = 0
+    basis =  "sto-3g"
+    geom = "H 0 0 0,H 0 0 0.74"
+    mol = Molecules(
+          geometry = geom,
+          basis    = basis,
+          multiplicity = multiplicity,
+          charge = charge)
+
+调用以下接口得到该分子体系的信息：
+
+.. code:: 
+
+    print("The number of atoms is", mol.n_atoms)
+    print("The number of electrons is", mol.n_electrons)
+    print("The number of orbitals is", mol.n_orbitals)
+    print("The number of qubits is", mol.n_qubits)
+    print("The Hartree-Fock energy is", mol.hf_energy)
+    print("The nuclear repulsion is", mol.nuclear_repulsion)
+
+
+.. parsed-literal::
+
+    The number of atoms is 2
+    The number of electrons is 2
+    The number of orbitals is 2
+    The number of qubits is 4
+    The Hartree-Fock energy is -1.1167593072992057
+    The nuclear repulsion is 0.7151043390810812
+
+
+.. code:: 
+
+    print("The canonical orbitals are\n", mol.canonical_orbitals)
+    print("The orbital energies are", mol.orbital_energies)
+    print("The overlap integrals are\n", mol.overlap_integrals)
+
+
+.. parsed-literal::
+
+    The canonical orbitals are
+     [[-0.54884228  1.21245192]
+     [-0.54884228 -1.21245192]]
+     
+    The orbital energies are [-0.57855386  0.67114349]
+
+    The overlap integrals are
+     [[1.         0.65987312]
+     [0.65987312 1.        ]]
+
+
+.. code:: 
+
+    print("The one body integrals are\n", mol.one_body_integrals)
+    print("The two body integrals are\n", mol.two_body_integrals)
+
+
+.. parsed-literal::
+
+    The one body integrals are
+     [[-1.25330979e+00  0.00000000e+00]
+     [ 4.16333634e-17 -4.75068849e-01]]
+
+    The two body integrals are
+     [[[[ 6.74755927e-01 -1.11022302e-16]
+       [-8.32667268e-17  6.63711401e-01]]
+    
+      [[-3.46944695e-17  1.81210462e-01]
+       [ 1.81210462e-01  0.00000000e+00]]]
+    
+    
+     [[[-4.85722573e-17  1.81210462e-01]
+       [ 1.81210462e-01 -2.22044605e-16]]
+    
+      [[ 6.63711401e-01 -2.22044605e-16]
+       [-1.66533454e-16  6.97651504e-01]]]]
+
+
