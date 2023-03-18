@@ -6,11 +6,37 @@
   目前，应用在VQE上的主流拟设主要分为两大类，一类化学启发拟设，如酉正耦合簇(Unitary Coupled-Cluster, UCC) [3]_ ，另一类是基于量子计算机硬件特性构造的拟设，即Hardware-Efficient拟设 [4]_ 。
 截至现在，pyChemiQ支持的拟设有Unitary Coupled Cluster(UCC)、Hardware-Efficient、Symmetry-Preserved [5]_ 来构造量子电路。
 
-  在基础教程中代码示例中使用的都是UCCSD:
+  在基础教程中代码示例中使用的都是UCCSD, 比如计算LiH分子:
 
 .. code-block::
 
+    from pychemiq import Molecules,ChemiQ,QMachineType
+    from pychemiq.Transform.Mapping import (jordan_wigner,MappingType)
+    from pychemiq.Optimizer import vqe_solver
     from pychemiq.Circuit.Ansatz import UCC
+    import numpy as np
+
+    multiplicity = 1
+    charge = 0
+    basis =  "sto-3g"
+    geom = ["Li     0.00000000    0.00000000    0.37770300",
+            "H      0.00000000    0.00000000   -1.13310900"]
+    mol = Molecules(
+        geometry = geom,
+        basis    = basis,
+        multiplicity = multiplicity,
+        charge = charge)
+    fermion_LiH = mol.get_molecular_hamiltonian()
+
+    chemiq = ChemiQ()
+    machine_type = QMachineType.CPU_SINGLE_THREAD
+    mapping_type = MappingType.Jordan_Wigner
+    pauli_size = len(pauli_LiH.data())
+    n_qubits = mol.n_qubits
+    n_elec = mol.n_electrons
+    chemiq.prepare_vqe(machine_type,mapping_type,n_elec,pauli_size,n_qubits)
+
+    # 设置ansatz拟设类型，这里使用的是UCCSD拟设
     ansatz = UCC("UCCSD",n_elec,mapping_type,chemiq=chemiq)
 
 下面我们来演示如何使用pyChemiQ调用其他拟设：
@@ -31,8 +57,41 @@
     from pychemiq.Circuit.Ansatz import SymmetryPreserved
     ansatz = SymmetryPreserved(n_elec,chemiq = chemiq)
 
+指定拟设类型后，就可以自动生成含参的量子线路，下一步就是指定经典优化器与初始参数并迭代求解：
+
+.. code-block::
+
+        method = "SLSQP"
+        init_para = np.zeros(ansatz.get_para_num())
+        solver = vqe_solver(
+                method = method,
+                pauli = pauli_LiH,
+                chemiq = chemiq,
+                ansatz = ansatz,
+                init_para=init_para)
+        result = solver.fun_val
+        print(result)
+        
+在其他参数不变的情况下，使用不同拟设的结果如下：
+
+.. list-table::
+    :align: center
+
+    *   -   ansatz
+        -   Energy(Hartree)
+    *   -   UCCS
+        -   -7.863382128921046
+    *   -   UCCD
+        -   -7.882121742611668
+    *   -   UCCSD
+        -   -7.882513551487563
+    *   -   HE
+        -   -7.8633821289210415
+    *   -   SP
+        -   -5.602230693394411 
 
 
+与同基组下的经典Full CI结果-7.882526376869对比，我们发现UCCD与UCCSD拟设已经达到了化学精度 :math:`1.6\times 10^3` Hartree。
 
 
 
