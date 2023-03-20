@@ -1,12 +1,19 @@
 配置文件参数介绍
 ============================
 
-  除了调用pyChemiQ的基础接口进行计算，您也可以设置配置文件直接运算，更多高级功能开放在配置文件里使用。您可以通过使用内置优化方法缩短量子线路，减少运行时间，还有切片数设置、拟设截断、MP2初参设置等丰富功能的接口可调用。如果您想试用pyChemiQ这些高级功能，请前往 `官网 <https://qcloud.originqc.com.cn/chemistryIntroduce>`_ 申请授权码。
+  除了调用pyChemiQ的基础接口进行计算，您也可以设置配置文件直接运算，更多高级功能开放在配置文件里使用。您可以通过使用内置优化方法缩短量子线路，减少运行时间，还有切片数设置、拟设截断、MP2初参设置等丰富功能的接口可调用。如果您想试用pyChemiQ这些高级功能，请前往 `官网 <https://qcloud.originqc.com.cn/chemistryIntroduce>`_ 申请授权码。ChemiQ和pyChemiQ的license是通用的，如果您已有ChemiQ的license，直接填进配置文件中全局设置的license参数即可。在设置完配置文件后，在终端输入下面的命令行即可运行计算：
+
+.. code-block::
+
+    from pychemiq import directly_run_config
+    directly_run_config("test.chemiq")  # 将test替换成您配置文件的名称
+
+
 
   配置文件通常为.chemiq为后缀的文件，主要分五个方面进行设置，详细的参数介绍及默认参数如下：
 
 1. 全局设置(general settings)
-    - task : 设置计算类型[energy/PES/MD]，即单点能计算/势能面扫描/分子动力学模拟。默认值energy。
+    - task : 设置计算类型[energy/MD]，即单点能计算/分子动力学模拟。默认值energy。
 
     - backend : 设置执行计算的后端类型[CPU_SINGLE_THREAD]。目前仅支持单线程CPU，更多后端类型的接入还在进行中。
 
@@ -134,20 +141,28 @@
     }
 
 
-第二个示例我们计算氢化锂分子的势能曲线。基组使用sto-3G，活性空间使用[2，2]，拟设使用自定义线路，映射使用parity，优化器使用SLSQP。初参为零。
+第二个示例我们计算氢分子的势能曲线，这里我们以扫描五个点为例，每个点间隔0.1 angstrom。基组使用sto-3G，活性空间使用[2，2]，拟设使用自定义线路，映射使用parity，优化器使用SLSQP。初参为零。
 
 .. code-block::
 
     general = {
-        task    = PES
+        task    = energy
         backend = CPU_SINGLE_THREAD
         license = XXXXX
     }
 
     mole = {
         geoms = {
-            H 0 0 0.38
-            Li 0 0 -1.13
+            H 0 0 0
+            H 0 0 0.54;
+            H 0 0 0
+            H 0 0 0.64;
+            H 0 0 0
+            H 0 0 0.74;
+            H 0 0 0
+            H 0 0 0.84;
+            H 0 0 0
+            H 0 0 0.94
         }
         bohr    = F
         charge  = 0
