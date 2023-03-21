@@ -29,7 +29,7 @@
 .. code-block::
 
     from pychemiq import Molecules,ChemiQ,QMachineType
-    from pychemiq.Transform.Mapping import (bravyi_kitaev,MappingType)
+    from pychemiq.Transform.Mapping import bravyi_kitaev,MappingType
     from pychemiq.Optimizer import vqe_solver
     from pychemiq.Circuit.Ansatz import UCC
     import numpy as np
@@ -88,14 +88,14 @@
 
 .. code-block::
 
-    -74.97462361862932 函数共调用16次
-    [-74.96590114589254, -74.93761158898924, -74.97445676271519, -74.97445676271519, -74.9741228232741, -74.97462271514233, -74.97462271514233, -74.97462047029794, -74.9746233827235, -74.9746233827235, -74.97462239749079, -74.97462357361123, -74.97462357361123, -74.97462251642055, -74.97462361862932, -74.97462361862932]
+    -74.97462360159876 调用函数16次
+    [-74.96590114589256, -74.93763769775363, -74.97445942068707, -74.97445942068707, -74.97411682452937, -74.9746226763453, -74.9746226763453, -74.97462062772358, -74.97462337673937, -74.97462337673937, -74.97462142026288, -74.97462351765488, -74.97462351765488, -74.974622639902, -74.97462360159876, -74.97462360159876]
 
-  为了对比pyChemiq的计算精度，我们将结果与经典计算化学软件PySCF [3]_ 的结果做了比较(PySCF的安装详见 `官网 <https://pyscf.org/install.html>`_ 。在PySCF中我们使用了相同的基组和方法，代码如下：
+  为了对比pyChemiq的计算精度，我们将结果与经典计算化学软件PySCF [3]_ 的结果做了比较(PySCF的安装详见 `官网 <https://pyscf.org/install.html>`_ 。在PySCF中我们使用了相同的基组和方法(VQE中UCCSD ansatz对应经典的CISD方法)，代码如下：
 
 .. code-block::
 
-    from pyscf import gto, scf, cc
+    from pyscf import gto, scf
 
     atom = '''
     O                  0.00000000    0.00000000    0.12713100
@@ -107,20 +107,20 @@
         basis='STO-3G',
         charge=0,
         spin=0)
-    mf = scf.HF(mol).run() 
-    mycc = cc.CCSD(mf,frozen=[0,1,2]).run() 
-    E_CCSD = mycc.e_tot
-    print(E_CCSD)
+    myhf = mol.RHF().run() 
+    mycas = myhf.CASCI(4, 4).run()
+    E_CISD = mycas.e_tot
+    print(E_CISD)
 
 得到的结果如下：
 
 .. code-block::
 
-    converged SCF energy = -74.9659011458928
-    E(CCSD) = -74.97463471534228  E_corr = -0.008733569449437468
-    -74.97463471534228
+    converged SCF energy = -74.9659011458929
+    CASCI E = -74.9746354406465  E(CI) = -6.11656024435146  S^2 = 0.0000000
+    -74.9746354406465
 
-  我们将pyChemiQ打印出来的数据作图，与同水平下的经典CCSD结果进行对比。可以看到随着函数迭代次数的增加，电子能量逐渐收敛至经典结果的能量，如图2所示。而且当函数迭代到第五次时电子能量已经达到了化学精度 :math:`1.6\times 10^3` Hartree。
+  我们将pyChemiQ打印出来的数据作图，与同水平下的经典CISD结果进行对比。可以看到随着函数迭代次数的增加，电子能量逐渐收敛至经典结果的能量，如图2所示。而且当函数迭代到第五次时电子能量已经达到了化学精度 :math:`1.6\times 10^3` Hartree。
 
 .. image:: ./picture/energy_convergence_H2O.png
    :align: center

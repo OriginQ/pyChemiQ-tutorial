@@ -11,7 +11,7 @@
 .. code-block::
 
     from pychemiq import Molecules,ChemiQ,QMachineType
-    from pychemiq.Transform.Mapping import (jordan_wigner,MappingType)
+    from pychemiq.Transform.Mapping import jordan_wigner,MappingType
     from pychemiq.Optimizer import vqe_solver
     from pychemiq.Circuit.Ansatz import UCC
     import numpy as np

@@ -22,11 +22,11 @@
 
     # 导入所需的包
     from pychemiq import Molecules,ChemiQ,QMachineType
-    from pychemiq.Transform.Mapping import (jordan_wigner,MappingType)
+    from pychemiq.Transform.Mapping import jordan_wigner,MappingType
     from pychemiq.Optimizer import vqe_solver
     from pychemiq.Circuit.Ansatz import UCC
     import numpy as np
-    from pyscf import gto, scf, cc
+    from pyscf import gto, scf, fci
     import matplotlib.pyplot as plt
 
     # 进行势能面扫描：先初始化参数，再构建不同键长下的分子体系，进行多次单点能计算
@@ -73,7 +73,7 @@
         energy = solver.fun_val
         energies += [energy]
 
-    # 使用经典计算化学软件PySCF来计算氢分子的在不同键长下的能量
+    # 使用经典计算化学软件PySCF的FCI方法来计算氢分子在不同键长下的能量
     pyscf_energies = []
     bond_length_interval = 0.1
     n_points = 40
@@ -85,9 +85,9 @@
                 basis='STO-3G',
                 charge=0,
                 spin=0)
-        mf = scf.HF(mol).run() 
-        mycc = cc.CCSD(mf).run() 
-        pyscf_energies += [mycc.e_tot]
+        myhf = scf.HF(mol).run() 
+        cisolver = fci.FCI(myhf) 
+        pyscf_energies += [cisolver.kernel()[0]]
 
     # 最后我们使用matplotlib来绘制氢分子势能面
     plt.figure()
