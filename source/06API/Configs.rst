@@ -53,7 +53,7 @@
 3. 拟设参数设置(ansatz settings)
     设置量子线路拟设类型[UCC/Hardware-efficient/Symmetry-presvered/User-define]。选择前三个类型的拟设，量子线路自动生成，选择最后一个线路拟设需要在参数circuit中输入originIR格式的量子线路。详见： `originIR格式介绍 <https://pyqpanda-toturial.readthedocs.io/zh/latest/QProgToOriginIR.html>`_ 。
 
-    - mapping : 设置映射[JK/P/BK/SP]。这几种映射方法分别为Jordan-Wigner Transform，Parity Transform, Bravyi-Kitaev Transform, Segment Parity Transform。
+    - mapping : 设置映射[JW/P/BK/SP]。这几种映射方法分别为Jordan-Wigner Transform，Parity Transform, Bravyi-Kitaev Transform, Segment Parity Transform。
 
     - excited_level : 设置激发水平[S/D/SD]，仅当ansatz为UCC时生效。
 
