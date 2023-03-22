@@ -47,6 +47,7 @@ pyChemiQ
    
    04advanced/fermionpauliop.rst
    04advanced/optimizer.rst
+   04advanced/circuit.rst
 
 .. toctree::
    :maxdepth: 2

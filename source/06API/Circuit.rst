@@ -56,9 +56,17 @@ Functions
       使用用户自定义的方式构建量子线路拟设。
 
       :param int n_electrons: 输入分子体系的电子数。
-      :param str circuit: 构建量子线路的originir字符串。
+      :param str circuit: 构建量子线路的originIR字符串。
       :param FermionOperator fermion: 构建量子线路的费米子算符类。
       :param ChemiQ chemiq: 指定chemiq类。详见pychemiq.ChemiQ。
 
       :return: 输出自定义拟设的AbstractAnsatz类。
+
+
+.. note::
+    Ansatz模块前三个函数的详细调用示例请参见基础教程中的 :doc:`../03basis/ansatz`。最后一个函数的调用示例请参见进阶教程中的 :doc:`../04advanced/circuit`。
+   
+
+
+
 

@@ -130,7 +130,7 @@
         reorder       = F
     }
 
-    optimizer = NELDER_MEAD {
+    optimizer = NELDER-MEAD {
         learning_rate                 = 0.1 
         init_para_type                = MP2
         slices                        = 1 

@@ -34,7 +34,7 @@ Classes
    :param Hamiltonian hamiltonian: 输入Hamiltonian类。PauliOperator中的哈密顿量是字符串形式，不利用后续的处理，Hamiltonian在存储方式上将泡利算符其转换成自定义的Hamiltonian类，方便提取每一项的信息。
    :param list[float] para: 指定初始待优化参数。
    :param AbstractAnsatz ansatz: 指定拟设类。详见pychemiq.Circuit.Ansatz。
-   :param bool extra_measure: 用于区分噪声模拟和非噪声模拟。布尔值。 
+   :param bool extra_measure: 用于区分噪声模拟和非噪声模拟。布尔值。 设置False为非噪声模拟。
 
    :return: 哈密顿量期望值，即基态能量。双精度浮点数。
 
@@ -61,9 +61,12 @@ Classes
 
    :return: 每一次函数迭代后的能量值。双精度浮点数数组。
 
+---------
 
-   Example::
 
+**接口示例：**
+
+.. code:: 
 
       from pychemiq import Molecules,ChemiQ,QMachineType,PauliOperator
       from pychemiq.Transform.Mapping import MappingType
@@ -72,13 +75,24 @@ Classes
       chemiq = ChemiQ()
       machine_type = QMachineType.CPU_SINGLE_THREAD
       mapping_type = MappingType.Jordan_Wigner
-      chemiq.prepare_vqe(machine_type,mapping_type,2,4,4)
+      chemiq.prepare_vqe(machine_type,mapping_type,2,1,4)
 
       ansatz = UCC("UCCD",2,mapping_type,chemiq=chemiq)
-      pauli = PauliOperator(" ",0)
+      pauli = PauliOperator("Z0 Z1 ",0.1)
       # 期望值函数与代价函数
       H = pauli.to_hamiltonian(True)
       result1 = chemiq.getExpectationValue(0,0,0,chemiq.qvec,H,[0],ansatz,False)
       result2 = chemiq.getLossFuncValue(0,[0],[0],0,0,pauli,chemiq.qvec,ansatz)
+      energies = chemiq.get_energy_history()
 
+      print(result1)
+      print(result2)
+      print(energies)
 
+打印得到的结果为：
+
+.. parsed-literal::
+
+      0.1
+      ('', 0.1)
+      [0.1]

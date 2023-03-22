@@ -28,3 +28,7 @@ Functions
 
    :return: QOptimizationResult类。详见 `pyqpanda.QOptimizationResult <https://pyqpanda-toturial.readthedocs.io/zh/latest/autoapi/pyqpanda/index.html#pyqpanda.QOptimizationResult>`_ 。
 
+
+
+.. note::
+    优化器的更多示例以及调用外部的scipy.optimize库来实现经典优化等方式，请参见进阶教程中的 :doc:`../04advanced/optimizer`。
