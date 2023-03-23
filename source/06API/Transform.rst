@@ -5,7 +5,7 @@ Module Contents
 ---------------
 - :py:mod:`pychemiq.Transform.mapping`  
 
-将费米子算符映射为泡利算符的mapping子模块。
+将费米子算符映射为泡利算符的mapping子模块。在使用UCC拟设搭建参数化的量子线路来制备试验波函数时，我们需要输入酉耦合簇算符的映射类型。这时我们通过pychemiq.Transform.mapping.MappingType来指定酉耦合簇算符的映射类型。这里的映射类型需要与哈密顿量的映射方式保持一致，也就是说在计算中我们要保持同一套映射方式。
 
 Classes
 ~~~~~~~~~~~
@@ -29,39 +29,22 @@ Classes
 
 **接口示例：**
 
-在使用UCC拟设搭建参数化的量子线路来制备试验波函数时，我们需要输入酉耦合簇算符的映射类型。这里的映射类型需要与哈密顿量的映射方式保持一致，也就是说在计算中我们要保持同一套映射方式。
-
 .. code:: 
 
       from pychemiq import ChemiQ,QMachineType
       from pychemiq.Transform.Mapping import MappingType
       from pychemiq.Circuit.Ansatz import UCC
 
+      chemiq = ChemiQ()
+      machine_type = QMachineType.CPU_SINGLE_THREAD
       # 使用JW映射方式
-      chemiq = ChemiQ()
-      machine_type = QMachineType.CPU_SINGLE_THREAD
       mapping_type = MappingType.Jordan_Wigner
-      chemiq.prepare_vqe(machine_type,mapping_type,2,1,4)
-      ansatz = UCC("UCCSD",2,mapping_type,chemiq=chemiq)
-
       # 使用BK映射方式
-      chemiq = ChemiQ()
-      machine_type = QMachineType.CPU_SINGLE_THREAD
-      mapping_type = MappingType.Bravyi_Kitaev
-      chemiq.prepare_vqe(machine_type,mapping_type,2,1,4)
-      ansatz = UCC("UCCSD",2,mapping_type,chemiq=chemiq)
-
+      # mapping_type = MappingType.Bravyi_Kitaev
       # 使用Parity映射方式
-      chemiq = ChemiQ()
-      machine_type = QMachineType.CPU_SINGLE_THREAD
-      mapping_type = MappingType.Parity
-      chemiq.prepare_vqe(machine_type,mapping_type,2,1,4)
-      ansatz = UCC("UCCSD",2,mapping_type,chemiq=chemiq)
-
+      # mapping_type = MappingType.Parity
       # 使用SegmentParity映射方式
-      chemiq = ChemiQ()
-      machine_type = QMachineType.CPU_SINGLE_THREAD
-      mapping_type = MappingType.SegmentParity
+      # mapping_type = MappingType.SegmentParity
       chemiq.prepare_vqe(machine_type,mapping_type,2,1,4)
       ansatz = UCC("UCCSD",2,mapping_type,chemiq=chemiq)
 

@@ -51,7 +51,7 @@
     - mix_scf : 设置此参数可以有效解决SCF不收敛问题。方法原理为阻尼方法(Damping)。将构建第n+1步Fock矩阵的密度矩阵D(n+1)变为w*D(n-1)+(1-w)*D(n)，此处的w即为设置的参数。参数平均化后的密度矩阵削弱了当前步与上一步密度矩阵之间的差异，使密度矩阵随迭代变化更为平滑，帮助收敛。该参数取值为[0.0, 1.0], 默认为0.5。
 
 3. 拟设参数设置(ansatz settings)
-    设置量子线路拟设类型[UCC/Hardware-efficient/Symmetry-presvered/User-define]。选择前三个类型的拟设，量子线路自动生成，选择最后一个线路拟设需要在参数circuit中输入originIR格式的量子线路。详见： `originIR格式介绍 <https://pyqpanda-toturial.readthedocs.io/zh/latest/QProgToOriginIR.html>`_ 。
+    设置量子线路拟设类型[UCC/Hardware-efficient/Symmetry-preserved/User-define]。选择前三个类型的拟设，量子线路自动生成，选择最后一个线路拟设需要在参数circuit中输入originIR格式的量子线路。详见： `originIR格式介绍 <https://pyqpanda-toturial.readthedocs.io/zh/latest/QProgToOriginIR.html>`_ 。
 
     - mapping : 设置映射[JW/P/BK/SP]。这几种映射方法分别为Jordan-Wigner Transform，Parity Transform, Bravyi-Kitaev Transform, Segment Parity Transform。
 
