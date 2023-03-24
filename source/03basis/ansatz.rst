@@ -6,6 +6,49 @@
   目前，应用在VQE上的主流拟设主要分为两大类，一类化学启发拟设，如酉正耦合簇(Unitary Coupled-Cluster, UCC) [3]_ ，另一类是基于量子计算机硬件特性构造的拟设，即Hardware-Efficient拟设 [4]_ 。
 截至现在，pyChemiQ支持的拟设有Unitary Coupled Cluster(UCC)、Hardware-Efficient、Symmetry-Preserved [5]_ 来构造量子电路，通过自定义的方式构建量子线路拟设详见进阶教程的 :doc:`../04advanced/circuit`。
 
+1. 通过 Unitary Coupled Cluster 拟设构建线路
+
+  在求解体系基态能量选用Hartree-Fock态作为初猜波函数时，由于Hartree-Fock态为单电子组态，没有考虑电子关联能，所以要将其制备成多电子组态(也就是纠缠态)，以使测量结果达到化学精度。UCC中的CC即是量子化学中的耦合簇算符 :math:`e^{\hat{T}}`，它从Hartree-Fock分子轨道出发，通过指数形式的耦合算符得到真实体系的波函数。详细的理论请查看 :doc:`../05theory/theoreticalbackground` 的拟设小节。下面我们示例的是氢分子单激发算符 :math:`a_2^{\dagger}a_0 - a_0^{\dagger}a_2` 的量子线路。
+
+
+.. image:: ./picture/UCC.png
+   :align: center
+   :scale: 50%
+.. centered:: 图 1: 单激发算符 :math:`a_2^{\dagger}a_0 - a_0^{\dagger}a_2` 的量子线路
+
+2. 通过 Hardware-Efficient 拟设构建线路
+
+  基于量子计算机硬件特性构造的拟设是各种变分量子算法中经常使用的一种拟设。 当我们对要解决的问题信息知之甚少时，我们可以使用基本的量子门来搜索目标。 通常基于硬件特性构造的拟设由许多层组成，每一层的量子线路上都由两部分组成：一是每个量子比特上的单比特旋转门（RZRXRZ），二是相邻量子比特上两个纠缠比特形成的受控逻辑门（受控RY门）。 单层的量子线路如下图所示：
+
+.. image:: ./picture/HE.png
+   :align: center
+   :scale: 55%
+.. centered:: 图 2: 基于 Hardware-Efficient 拟设的单层量子线路
+
+3. 通过 Symmetry-Preserved 拟设构建线路
+
+  基于 Symmetry-Preserved 拟设是通过一个特定纠缠门(entangling gate) :math:`A(\theta, \phi)` 作为组成单元，来构建保持粒子数守恒、时间反演对称性与自旋对称性的拟设。在 :math:`|00\rangle, |01\rangle, |10\rangle, |11\rangle` 为基下， :math:`A(\theta, \phi)` 可以被表示为：
+
+.. math::
+   A(\theta, \phi) = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & \cos \theta & e^{i\phi}\sin \theta & 0 \\ 0 & e^{-i\phi}\sin \theta & -\cos \theta & 0 \\ 0 & 0 & 0 & 1  \\ \end{pmatrix}
+
+该纠缠门分解成单、双比特基础门为：
+
+.. image:: ./picture/AGate.png
+   :align: center
+   :scale: 30%
+.. centered:: 图 3: :math:`A(\theta, \phi)` 门的分解
+
+由 :math:`A(\theta, \phi)` 与X门构建的Symmetry-Preserved 拟设的量子线路如下图所示：
+
+.. image:: ./picture/SP.png
+   :align: center
+   :scale: 60%
+.. centered:: 图 4: 基于 Symmetry-Preserved 拟设的单层量子线路
+
+
+----------
+
   在基础教程中代码示例中使用的都是UCCSD, 比如计算LiH分子:
 
 .. code-block::
