@@ -70,6 +70,7 @@
         multiplicity = multiplicity,
         charge = charge)
     fermion_LiH = mol.get_molecular_hamiltonian()
+    pauli_LiH = jordan_wigner(fermion_LiH)
 
     chemiq = ChemiQ()
     machine_type = QMachineType.CPU_SINGLE_THREAD
