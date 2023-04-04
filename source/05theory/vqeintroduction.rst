@@ -50,7 +50,7 @@ VQE流程简介
 
   图2展示的是VQE流程中量子线路的部分，即图1淡黄色的部分。量子态的制备部分我们以UCC拟设为例来进行线路构造。使用UCC拟设来制备试验态通常是先在线路上搭建好参照态 :math:`|\psi_{ref}\rangle` ，然后添加上节中式(23)的 :math:`\hat{U}(\theta)` 酉耦合簇算符演化生成试验波函数 :math:`|\psi(\theta)\rangle` 。
 
-.. image:: ./picture/vqe1.png
+.. image:: ./picture/vqe2.png
    :align: center
    :scale: 50%
 .. centered:: 图 2: VQE量子线路部分的流程
