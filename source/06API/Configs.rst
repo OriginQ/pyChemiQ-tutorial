@@ -61,7 +61,7 @@
 
     - cutoff : 根据MP2的初参对UCC拟设的激发项进行截断。仅当ansatz为UCC且init_para_type=MP2时生效。
 
-    - reorder : 按顺序排列量子比特，前半部分量子比特编码自旋向上，后半部分量子比特编码自旋向下，此参数设置为T时可以减少量子比特的使用。仅当mapping为P时生效。默认为F。
+    - reorder : 按顺序排列量子比特，前半部分量子比特编码自旋向上，后半部分量子比特编码自旋向下，此参数设置为T时可以减少量子比特的使用。当mapping为P和BK时生效。默认为F。
 
     - circuit : 通过originIR字符串设置线路，仅当ansatz为User-define时生效。
 
