@@ -33,7 +33,7 @@
 
     from pychemiq import Molecules
 
-  在 pychemiq.Molecules 这个模块中，我们可以初始化分子的电子结构参数, 包括分子的几何构型、基组、电荷、自旋多重度，将分子信息存储在对象中。输入参数后执行经典 hartree-fock计算。
+  在 pychemiq.Molecules 这个模块中，我们可以初始化分子的电子结构参数, 包括分子的几何构型(坐标单位为angstrom)、基组、电荷、自旋多重度，将分子信息存储在对象中。输入参数后执行经典 hartree-fock计算。
 
 .. code-block::
 

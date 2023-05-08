@@ -14,7 +14,7 @@
     from pychemiq.Circuit.Ansatz import UCC
     import numpy as np
 
-    # 初始化分子的电子结构参数，包括电荷、基组、原子坐标、自旋多重度
+    # 初始化分子的电子结构参数，包括电荷、基组、原子坐标(angstrom)、自旋多重度
     multiplicity = 1
     charge = 0
     basis =  "sto-3g"
