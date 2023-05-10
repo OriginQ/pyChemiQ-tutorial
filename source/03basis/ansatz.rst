@@ -37,7 +37,7 @@
 .. image:: ./picture/AGate.png
    :align: center
    :scale: 30%
-.. centered:: 图 3: :math:`A(\theta, \phi)` 门的分解
+.. centered:: 图 3: :math:`A(\theta, \phi)` 门的分解。其中: :math:`R(\theta, \phi)  = R_z(\phi + \pi) R_y(\theta + \pi/2), R_z(\theta) = exp(−i \theta \sigma_z/2), R_y(\phi) = exp(−i \phi \sigma_y/2)`
 
 由 :math:`A(\theta, \phi)` 与X门构建的Symmetry-Preserved 拟设的量子线路如下图所示：
 
@@ -123,6 +123,8 @@
 
     *   -   ansatz
         -   Energy(Hartree)
+    *   -   HF
+        -   -7.863382128921067
     *   -   UCCS
         -   -7.863382128921046
     *   -   UCCD
