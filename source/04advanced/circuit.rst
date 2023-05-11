@@ -3,7 +3,7 @@
 
   在基础教程中的拟设教程我们展示了如何使用Unitary Coupled-Cluster、Hardware-Efficient、Symmetry-Preserved 接口来直接搭建量子线路，这个教程展示的是如何使用用户自定义的方式来构建量子线路拟设。
 
-  通过调用 pychemiq.Circuit.Ansatz 模块下的UserDefine函数，我们可以通过以下两种方式构建线路：第一种是通过本源量子云平台 `图形化编程界面 <https://qcloud.originqc.com.cn/zh/computerServies/quantumVm/5/0/5>`_ 搭建量子线路后导出originIR格式的代码，输入到circuit参数中，第二种是通过输入耦合簇激发项的费米子算符fermion参数来构建量子线路。该函数的接口介绍如下：
+  调用 pychemiq.Circuit.Ansatz 模块下的UserDefine函数，我们可以通过以下两种方式自定义构建线路：第一种是通过将originIR格式的代码输入到circuit参数中自定义量子线路，第二种是通过输入耦合簇激发项的费米子算符fermion参数来构建量子线路。该函数的接口介绍如下：
 
 .. py:function:: UserDefine(n_electrons, circuit=None, fermion=None, chemiq=None)
 
@@ -17,7 +17,10 @@
       :return: 输出自定义拟设的AbstractAnsatz类。
 
 
-  我们先来示例通过第一种方式来构建量子线路。如下图，首先在本源量子云平台 `图形化编程界面 <https://qcloud.originqc.com.cn/zh/computerServies/quantumVm/5/0/5>`_ 搭建量子线路。
+**1. 通过将originIR输入到circuit参数中自定义量子线路**
+
+
+  我们可以通过两种方法获得originIR格式的量子线路，第一种方法是通过本源量子云平台的图形化编程界面搭建量子线路。如下图，先在本源量子云平台 `图形化编程界面 <https://qcloud.originqc.com.cn/zh/computerServies/quantumVm/5/0/5>`_ 搭建量子线路。
 
 .. image:: ./picture/circuit_originIR.png
    :align: center
@@ -89,7 +92,7 @@
         H q[0]
         H q[1]
         H q[2]
-        RX q[3],(fix,-1.570796)
+        RX q[3],(fix,-np.pi/2)
         CNOT q[0],q[3]
         CNOT q[1],q[3]
         CNOT q[2],q[3]
@@ -100,7 +103,7 @@
         H q[0]
         H q[1]
         H q[2]
-        RX q[3],(fix,1.570796)
+        RX q[3],(fix,np.pi/2)
     """
     ansatz = UserDefine(n_elec, circuit=circuit, chemiq=chemiq)
 
@@ -116,10 +119,88 @@
     result = solver.fun_val
     print(result)
 
-打印得到的结果为：0.7151043390810803
+打印得到的结果为：0.7151043390810803。
+这里的两个RX门为固定参数，不参与变分线路的参数优化，故含有关键字"fix"。对于有参数的旋转门，默认不含fix的参数是待优化的参数。
 
 
-  第二种是通过输入耦合簇激发项的费米子算符fermion参数来构建量子线路。例如，对于4个量子比特，2电子体系的双激发耦合簇算符，自旋轨道0和1为占据态，激发后的耦合簇项为：01->23。
+  第二种获得originIR格式的量子线路是通过pyqpanda中的convert_qprog_to_originir函数获得，详细教程见 `量子程序转化OriginIR <https://pyqpanda-toturial.readthedocs.io/zh/latest/QProgToOriginIR.html>`_ 。这里我们以拟设教程中提到的 Hardware-Efficient 拟设的单层线路为例，演示如何通过量子程序获得OriginIR。
+下面我们先构建HE拟设线路QProg，再通过函数convert_qprog_to_originir(prog, machine)将其转换成originIR格式。
+
+.. code:: 
+
+    import pyqpanda as pq
+    import numpy as np
+
+    def HE_ansatz(machine_type,qn, para):  
+        machine = pq.init_quantum_machine(machine_type)
+        qlist=pq.qAlloc_many(qn)   
+    
+        # 构建HE拟设线路
+        prog = pq.QProg()
+        for i in range(qn):
+            prog.insert(pq.RZ(qlist[i], para[4*i]))  
+            prog.insert(pq.RX(qlist[i], para[4*i+1]))
+            prog.insert(pq.RZ(qlist[i], para[4*i+2]))
+        
+        for j in range(qn-1):
+            ry_control = pq.RY(qlist[j+1], para[4*j+3]).control(qlist[j])
+            prog.insert(ry_control)
+        
+        ry_last = pq.RY(qlist[0], para[4*qn-1]).control(qlist[qn-1])                                                      
+        prog.insert(ry_last)
+        
+        #print(prog)
+        OriginIR=pq.convert_qprog_to_originir(prog, machine)
+        print(OriginIR)
+        return OriginIR
+
+下面我们定义主函数来获得该参数下的originIR格式的量子线路。这里我们以四个量子比特为例：
+
+.. code:: 
+
+    if __name__ == "__main__":
+        machine_type = pq.QMachineType.CPU
+        qn=4
+        para=np.random.random(4*qn)
+        HE_ansatz(machine_type,qn, para)
+
+打印得到的结果为：
+
+.. code:: 
+
+    QINIT 4
+    CREG 0
+    RZ q[0],(0.6639123)
+    RX q[0],(0.69876429)
+    RZ q[0],(0.87923246)
+    RZ q[1],(0.50633782)
+    RX q[1],(0.57366393)
+    RZ q[1],(0.51500428)
+    RZ q[2],(0.41510053)
+    RX q[2],(0.58136057)
+    RZ q[2],(0.60506401)
+    RZ q[3],(0.99153126)
+    RX q[3],(0.89568316)
+    RZ q[3],(0.6493124)
+    CONTROL q[0]
+    RY q[1],(0.011800026)
+    ENDCONTROL
+    CONTROL q[1]
+    RY q[2],(0.92157183)
+    ENDCONTROL
+    CONTROL q[2]
+    RY q[3],(0.64791654)
+    ENDCONTROL
+    CONTROL q[3]
+    RY q[0],(0.50756615)
+    ENDCONTROL
+
+将前两行删去后即可输入到UserDefine函数中的circuit参数中，如第一种方式所示。
+
+
+**2. 通过输入耦合簇激发项的费米子算符fermion参数来构建量子线路**
+
+  第二种方式是通过输入耦合簇激发项的费米子算符fermion参数来构建量子线路。例如，对于4个量子比特，2电子体系的双激发耦合簇算符，自旋轨道0和1为占据态，激发后的耦合簇项为：01->23。
 
 .. image:: ./picture/CCD.png
    :align: center
