@@ -92,7 +92,7 @@
         H q[0]
         H q[1]
         H q[2]
-        RX q[3],(fix,-np.pi/2)
+        RX q[3],(fix,-1.5707963)
         CNOT q[0],q[3]
         CNOT q[1],q[3]
         CNOT q[2],q[3]
@@ -103,7 +103,7 @@
         H q[0]
         H q[1]
         H q[2]
-        RX q[3],(fix,np.pi/2)
+        RX q[3],(fix,1.5707963)
     """
     ansatz = UserDefine(n_elec, circuit=circuit, chemiq=chemiq)
 
