@@ -120,7 +120,7 @@
     print(result)
 
 打印得到的结果为：0.7151043390810803。
-这里的两个RX门为固定参数，不参与变分线路的参数优化。对于有参数的旋转门，默认参数不为 :math:`\pi /2` 或 :math:`-\pi /2` 的是待优化的参数。
+这里的两个RX门为固定参数，不参与变分线路的参数优化。对于有参数的旋转门，默认参数不为 :math:`\pi /2` 或 :math:`- \pi /2` 的是待优化的参数。
 
 
   第二种获得originIR格式的量子线路是通过pyqpanda中的convert_qprog_to_originir函数获得，详细教程见 `量子程序转化OriginIR <https://pyqpanda-toturial.readthedocs.io/zh/latest/QProgToOriginIR.html>`_ 。这里我们以拟设教程中提到的 Hardware-Efficient 拟设的单层线路为例，演示如何通过量子程序获得OriginIR。
