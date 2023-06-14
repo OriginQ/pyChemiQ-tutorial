@@ -80,7 +80,7 @@
 
     - xatol : 设置变量收敛阈值，默认值1e-4。
 
-    - fatol : 设置变量收敛阈值，默认值1e-4。
+    - fatol : 设置期望值收敛阈值，默认值1e-4。
 
 5. 分子动力学参数设置(molecular dynamics parameter settings)
     - HF : 设置关联采样方法。默认为1。
