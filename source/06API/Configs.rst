@@ -59,7 +59,7 @@
 
     - restricted : 对激发项进行限制，制备更少组态波函数的叠加态以缩短线路。默认为T。仅当ansatz为UCC时生效。
 
-    - cutoff : 根据MP2的初参对UCC拟设的激发项进行截断。仅当ansatz为UCC且init_para_type=MP2时生效。
+    - cutoff : 根据MP2的初参对UCC拟设的激发项进行截断。仅当ansatz为UCC且init_para_type=MP2时生效。默认为F。
 
     - reorder : 按顺序排列量子比特，前半部分量子比特编码自旋向上，后半部分量子比特编码自旋向下，此参数设置为T时可以减少量子比特的使用。当mapping为P和BK时生效。默认为F。
 
