@@ -20,7 +20,7 @@ Parity(MSP)变换 [5]_ 。可以通过如下方式调用相应的包：
     parity,
     segment_parity)
 
-  例如我们使用JW变换将上节氢分子的费米子Hamiltonian映射成泡利形式，示例代码及打印结果如下：
+  例如我们使用JW变换将上节氢分子的费米子Hamiltonian映射成泡利形式，示例代码如下：
 
 .. code-block::
 
@@ -40,6 +40,10 @@ Parity(MSP)变换 [5]_ 。可以通过如下方式调用相应的包：
     # 使用JW变换将得到的氢分子的费米子Hamiltonian映射成泡利形式
     pauli_H2 = jordan_wigner(fermion_H2)
     print(pauli_H2)
+
+  打印结果如下：
+
+.. code-block::
 
     {
     "" : -0.097066,

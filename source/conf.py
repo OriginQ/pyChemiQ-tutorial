@@ -7,9 +7,9 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "pyChemiQ"
-copyright = "2023, OriginQC"
+copyright = "2024, OriginQC"
 author = "OriginQC"
-release = "v1.0"
+release = "v1.1"
 
 latex_engine = "xelatex"
 latex_elements = {

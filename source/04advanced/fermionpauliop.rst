@@ -63,6 +63,11 @@
 .. code-block::
 
    print("data = {}".format(a.data()))
+
+  返回的结果如下：
+
+.. code-block::
+
    data = [(([(0, False), (1, True)], '0 1+'), (2+0j))]
 
 
@@ -149,6 +154,11 @@
 .. code-block::
 
    print("data = {}".format(a.data()))
+
+  返回的结果如下：
+
+.. code-block::
+   
    data = [(({0: 'Z', 1: 'Z'}, 'Z0 Z1'), (2+0j))]
 
 
