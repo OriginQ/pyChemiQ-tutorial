@@ -55,6 +55,7 @@
     - spin(int) : 设置自旋多重度(M=2S+1)，默认值1。
 
     - basis(str) : 设置计算所需的基组水平[MINI/sto-3G/sto-6G/3-21G/6-31G/...]。从V2.4.0起，ChemiQ支持常见的600+个基组及用户自定义基组。支持在 `basis set exchange网站 <https://www.basissetexchange.org/>`_ 上的大部分基组（除少量过大的基组外），包括但不限于STO-nG基组、Pople系列基组、Ahlrichs的def系列基组、Dunning系列基组、赝势基组等。往期版本支持的基组有：MINI、STO-3G、STO-6G、3-21G和6-31G，其他基组可直接输入名称，具体的基组名称字符串输入规则如下：
+
         - 大写字母转小写字母
         - 保留弥散基组的加号+
         - 保留极化基组的正反括号()，星号*转为下划线\_
