@@ -10,7 +10,7 @@
 
 
 
-  配置文件通常为.chemiq为后缀的文件，主要分五个方面进行设置，详细的参数介绍及默认参数如下：
+  配置文件通常为.chemiq为后缀的文件，主要分六个方面进行设置，详细的参数介绍及默认参数如下：
 
 1. 全局设置(general settings)
    
@@ -29,6 +29,8 @@
     - PES_values(float) : 当生成方式为快速生成时，需要指定三个值：起始值，终止值，节点个数(int)；当生成方式为自定义生成时，需要指定具体的扫描坐标。其中扫描坐标为键长时单位为angstrom，为键角时单位为角度。此时没有个数限制。
 
    可选参数：
+
+    - chem_method(str) : 使用何种经典计算方法[HF/CCSD]。默认为HF。
 
     - print_out(bool) : 设置是否打印scf迭代过程。默认为F。
 
@@ -65,6 +67,12 @@
     请务必确保在基组框中输入的基组名称与基组文件一致，否则前端程序将会返回报错：XXX.g94 not exist!
 
    可选参数：
+
+    - diis(str) : 指定是否使用DIIS(Direct Inversion in the Iterative Subspace,迭代子空间中直接求逆)来加速自洽场迭代[cdiis/None]。
+    
+    - diis_n(int) : cdiis的历史记录长度，即使用前diis_n个密度矩阵计算下一个密度矩阵。默认值为8。仅当diis=cdiis时有效。
+    
+    - diis_thre(float) : 当迭代前后两个密度矩阵rmsd小于该阈值时，开始运行cdiis算法。默认值为0.1。仅当diis=cdiis时有效。
 
     - bohr(bool) : 坐标单位是否设置为bohr。默认为F，用angstrom为单位。
 
@@ -105,7 +113,7 @@
 
     - Optimizer(str) : 设置经典优化器类型[Nelder-Mead/Powell/Gradient-Descent/COBYLA/L-BFGS-B/SLSQP]。
 
-    - init_para_type(str) : 设置构造初始参数的方式[Zero/Random/input/MP2]，其中Zero表示初参为全零，Random表示初参为[0,1)区间内的随机数，input表示自定义初参，MP2表示为二阶微扰得到的初参结果。其中MP2只在拟设为UCCD和UCCSD时可用。初参默认为Zero。
+    - init_para_type(str) : 设置构造初始参数的方式[Zero/Random/input/MP2/CCSD]，其中Zero表示初参为全零，Random表示初参为[0,1)区间内的随机数，input表示自定义初参，MP2表示为二阶微扰得到的初参结果，CCSD表示为使用单双激发耦合簇得到的初参结果。其中MP2和CCSD只在拟设为UCCD和UCCSD时可用。初参默认为Zero。需要注意的是，当使用CCSD作为初参时，需指定全局设置中 chem_method 为CCSD。
 
    可选参数：
 
@@ -142,6 +150,27 @@
     - step_number(int) : 设置总步数，大于1，默认100。
 
     - delta_r(float) : 设置差分坐标大小，大于0，默认0.001。
+
+6. 真实量子芯片模拟(real quantum chip computing settings)
+
+    - chip_mode(str) : 设置芯片任务模式[wait/submit/query/none]。wait表示提交任务并等待返回结果，每两秒钟查询1次，持续一分钟。如果查询不到结果后端会结束查询并返回信息：“当前任务还未结束”。submit表示仅提交任务；query表示仅查询任务，此时需要填写任务id，即chip_task_id。默认为submit。
+
+    - chip_task_id(str) : 提交任务的id号，仅chip_mode = query模式需要。
+
+    - cloud_url(str) : 云平台网址，默认为https://pyqanda-admin.qpanda.cn。
+
+    - cloud_api_key(str) : 云平台api key，可以从 `本源量子云平台 <ttps://console.originqc.com.cn/zh/computerServices/dashboard>`_ 上查看并复制个人的api key。
+  
+    - shots(int) : 量子线路在真实量子计算机上进行测量的采样次数，采样次数越高，统计误差越小，但计算所需的耗时也越长。默认的采样次数为1000次。
+  
+    - chip_id(str) : 量子比特芯片编号。默认使用悟空72比特超导芯片，即72。
+
+    - chip_amend(bool) : 指的是测量时是否开启误差修正，修正会让概率结果更精确，默认为True。
+
+    - chip_mapping(bool) : 指的是自动在真实芯片拓扑结构上挑选出符合量子线路结构的量子比特，默认为True。
+  
+    - chip_circuit_opt(bool) : 线路自动优化是指自动在线路编译时使用算法合并逻辑门，以减少线路深度，默认为True。
+
 
 下面我们给出一个使用配置文件计算氢分子单点能的案例。基组使用sto-3G，拟设使用UCCSD，映射使用BK，优化器使用NELDER-MEAD。初参为MP2。
 
