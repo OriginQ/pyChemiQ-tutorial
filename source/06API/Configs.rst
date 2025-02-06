@@ -10,7 +10,7 @@
 
 
 
-  配置文件通常为.chemiq为后缀的文件，主要分六个方面进行设置，详细的参数介绍及默认参数如下：
+  配置文件通常为.chemiq为后缀的文件，下一节中我们将给出更多的配置文件示例。这里主要分六个方面进行设置，详细的参数介绍及默认参数如下：
 
 1. 全局设置(general settings)
    
@@ -19,6 +19,8 @@
     - task(str) : 设置计算类型[energy/PES/MD]，即单点能计算/势能曲线计算/分子动力学模拟。默认值energy。
 
     - backend(str) : 设置执行计算的后端类型[CPU_SINGLE_THREAD]。目前仅支持单线程CPU，更多后端类型的接入还在进行中。
+    
+    - license(str) : 设置授权序列号。请前往 `官网 <https://originqc.com.cn/product/zh/chemistryIntroduce?pid=57&bannerId=88>`_ 申请授权码。
     
    计算类型为PES时的必要参数:
 
@@ -31,6 +33,8 @@
    可选参数：
 
     - chem_method(str) : 使用何种经典计算方法[HF/CCSD]。默认为HF。
+    
+    - hamiltonian(str) : 使用该关键字可以自定义哈密顿量进行计算。注意自定义哈密顿量需要设置关键字nelec，即电子数量。
 
     - print_out(bool) : 设置是否打印scf迭代过程。默认为F。
 
@@ -42,7 +46,7 @@
 
     - logfile_level(int) : 设置文件输出日志级别， 0为输出，6为不输出。默认值为6。
 
-    - license(str) : 设置授权序列号。请前往 `官网 <https://originqc.com.cn/product/zh/chemistryIntroduce?pid=57&bannerId=88>`_ 申请授权码。
+
 
 2. 分子参数设置(Molecule specification)
 
@@ -73,6 +77,10 @@
     - diis_n(int) : cdiis的历史记录长度，即使用前diis_n个密度矩阵计算下一个密度矩阵。默认值为8。仅当diis=cdiis时有效。
     
     - diis_thre(float) : 当迭代前后两个密度矩阵rmsd小于该阈值时，开始运行cdiis算法。默认值为0.1。仅当diis=cdiis时有效。
+  
+    - pauli_group(str) : 是否使用泡利分组方法[native/none]。默认为none。泡利分组是一种通过分析哈密顿量子项中的对易关系来减少测量次数从而高效求解哈密顿量期望值的方法。
+    
+    - pauli_reverse(bool) : 设置比特顺序为正序还是倒序。默认为T，即q3-q2-q1-q0的顺序。
 
     - bohr(bool) : 坐标单位是否设置为bohr。默认为F，用angstrom为单位。
 
@@ -90,7 +98,7 @@
    
    必要参数：
 
-    - ansatz(str) : 设置量子线路拟设类型[UCC/Hardware-efficient/Symmetry-preserved/User-define]。选择前三个类型的拟设，量子线路自动生成，选择最后一个线路拟设需要在参数circuit中输入originIR格式的量子线路。详见： `originIR格式介绍 <https://pyqpanda-toturial.readthedocs.io/zh/latest/10.%E9%87%8F%E5%AD%90%E7%BA%BF%E8%B7%AF%E7%BC%96%E8%AF%91/QProgToOriginIR.html>`_ 。
+    - ansatz(str) : 设置量子线路拟设类型[UCC/Hardware-efficient/Symmetry-preserved/User-define]。选择前三个类型的拟设，量子线路自动生成，选择最后一种自定义线路拟设需要在参数circuit输入originIR格式的量子线路或者在参数pauli中定义。originIR格式说明详见： `originIR格式介绍 <https://pyqpanda-toturial.readthedocs.io/zh/latest/10.%E9%87%8F%E5%AD%90%E7%BA%BF%E8%B7%AF%E7%BC%96%E8%AF%91/QProgToOriginIR.html>`_ 。
 
     - mapping(str) : 设置映射[JW/P/BK/SP]。这几种映射方法分别为Jordan-Wigner Transform，Parity Transform, Bravyi-Kitaev Transform, Segment Parity Transform。
 
@@ -111,9 +119,9 @@
 
    必要参数：
 
-    - Optimizer(str) : 设置经典优化器类型[Nelder-Mead/Powell/Gradient-Descent/COBYLA/L-BFGS-B/SLSQP]。
+    - Optimizer(str) : 设置经典优化器类型[Nelder-Mead/Powell/Gradient-Descent/COBYLA/L-BFGS-B/SLSQP/GAQPSO]。
 
-    - init_para_type(str) : 设置构造初始参数的方式[Zero/Random/input/MP2/CCSD]，其中Zero表示初参为全零，Random表示初参为[0,1)区间内的随机数，input表示自定义初参，MP2表示为二阶微扰得到的初参结果，CCSD表示为使用单双激发耦合簇得到的初参结果。其中MP2和CCSD只在拟设为UCCD和UCCSD时可用。初参默认为Zero。需要注意的是，当使用CCSD作为初参时，需指定全局设置中 chem_method 为CCSD。
+    - init_para_type(str) : 设置构造初始参数的方式[Zero/Random/input/MP2/CCSD]，其中Zero表示初参为全零，Random表示初参为[0,1)区间内的随机数，input表示自定义初参，MP2表示为二阶微扰得到的初参结果，CCSD表示为使用单双激发耦合簇得到的初参结果。其中MP2和CCSD只在拟设为UCCD和UCCSD时可用。初参默认为Zero。
 
    可选参数：
 
@@ -172,7 +180,7 @@
     - chip_circuit_opt(bool) : 线路自动优化是指自动在线路编译时使用算法合并逻辑门，以减少线路深度，默认为True。
 
 
-下面我们给出一个使用配置文件计算氢分子单点能的案例。基组使用sto-3G，拟设使用UCCSD，映射使用BK，优化器使用NELDER-MEAD。初参为MP2。
+  下面我们给出一个使用配置文件计算氢分子单点能的案例。基组使用sto-3G，拟设使用UCCSD，映射使用BK，优化器使用NELDER-MEAD。初参为MP2。
 
 .. code-block::
 
@@ -214,7 +222,7 @@
     }
 
 
-第二个示例我们计算氢分子的势能曲线，这里我们以扫描五个点为例，键长从0.6 angstrom开始，每个点间隔0.1 angstrom。基组使用sto-3G，拟设使用自定义线路，映射使用parity，优化器使用SLSQP。初参为零。
+  第二个示例我们计算氢分子的势能曲线，这里我们以扫描五个点为例，键长从0.6 angstrom开始，每个点间隔0.1 angstrom。基组使用sto-3G，拟设使用自定义线路，映射使用parity，优化器使用SLSQP。初参为零。
 
 .. code-block::
 
@@ -263,7 +271,7 @@
     }
 
 
-第三个示例我们计算氢化锂分子的分子动力学轨迹。基组使用3-21G，活性空间使用[4，4]，拟设使用Hardware-efficient，映射使用JW，优化器使用L-BFGS-B。初参为随机数。
+  第三个示例我们计算氢化锂分子的分子动力学轨迹。基组使用3-21G，活性空间使用[4，4]，拟设使用Hardware-efficient，映射使用JW，优化器使用L-BFGS-B。初参为随机数。
 
 .. code-block::
 
@@ -308,3 +316,46 @@
         step_number        = 100 
         delta_r            = 0.001
     }
+
+  第四个示例我们通过配置文件调用真实芯片来计算氢分子的基态能量。下面license和cloud_api_key关键字需自行填写。
+
+.. code-block::
+
+    general = {
+        license = XXXXX
+        task = energy {
+        chip_mode        = wait 
+        cloud_url        = https://pyqanda-admin.qpanda.cn
+        cloud_api_key    = XXXXX
+        shots            = 1000
+        chip_id          = 72
+        chip_amend       = T
+        chip_mapping     = T
+        chip_circuit_opt = T
+        }
+    }
+
+    mole = {
+        geoms = {
+            H 0 0 0
+            H 0 0 0.74
+        }
+        charge  = 0
+        spin    = 1 
+        basis   = sto-3G
+    }
+
+    ansatz = Hardware-efficient {
+        mapping       = BK
+    }
+
+    optimizer = NELDER-MEAD {
+        learning_rate                 = 0.1 
+        init_para_type                = Random
+        slices                        = 1 
+        iters                         = 1000 
+        fcalls                        = 1000 
+        xatol                         = 1e-6 
+        fatol                         = 1e-6 
+    }
+
