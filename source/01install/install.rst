@@ -10,4 +10,4 @@
    pip install pychemiq
 
 
-除了调用pyChemiQ的基础接口进行计算，您也可以设置配置文件直接运算，更多高级功能开放在配置文件里使用。您可以通过使用内置优化方法缩短量子线路，减少运行时间，还有切片数设置、拟设截断、MP2初参设置等丰富功能的接口可调用。如果您想试用pyChemiQ这些高级功能，请前往 `本源量子商城 <https://mall.originqc.com.cn>`_ 购买获取。ChemiQ和pyChemiQ的license是通用的，如果您已有ChemiQ的license，直接填进配置文件中全局设置的license参数即可。详细参数配置请见 :doc:`../06API/Configs`一节。
+pyChemiQ提供丰富灵活的接口生成哈密顿量、自定义拟设线路、优化线路参数的调用方法。除了调用pyChemiQ的基础接口进行计算，您也可以设置配置文件直接运算，更多高级功能开放在配置文件里使用。您可以通过使用内置优化方法缩短量子线路，减少运行时间，还有切片数设置、拟设截断、MP2初参设置等丰富功能的接口可调用。如果您想试用pyChemiQ这些高级功能，请前往 `本源量子商城 <https://mall.originqc.com.cn>`_ 购买获取。ChemiQ和pyChemiQ的license是通用的，如果您已有ChemiQ的license，直接填进配置文件中全局设置的license参数即可。详细参数配置请见 :doc:`../06API/Configs` 一节。
