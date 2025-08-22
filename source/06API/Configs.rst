@@ -1,7 +1,7 @@
 配置文件参数介绍
 ============================
 
-  除了调用pyChemiQ的基础接口进行计算，您也可以设置配置文件直接运算，更多高级功能开放在配置文件里使用。您可以通过使用内置优化方法缩短量子线路，减少运行时间，还有切片数设置、拟设截断、MP2初参设置等丰富功能的接口可调用。如果您想试用pyChemiQ这些高级功能，请前往 `官网 <https://originqc.com.cn/product/zh/chemistryIntroduce?pid=57&bannerId=88>`_ 申请授权码。ChemiQ和pyChemiQ的license是通用的，如果您已有ChemiQ的license，直接填进配置文件中全局设置的license参数即可。在设置完配置文件后，在终端输入下面的命令行即可运行计算：
+  除了调用pyChemiQ的基础接口进行计算，您也可以设置配置文件直接运算，更多高级功能开放在配置文件里使用。您可以通过使用内置优化方法缩短量子线路，减少运行时间，还有切片数设置、拟设截断、MP2初参设置等丰富功能的接口可调用。如果您想试用pyChemiQ这些高级功能，请前往 `本源量子商城 <https://mall.originqc.com.cn>`_ 购买获取。ChemiQ和pyChemiQ的license是通用的，如果您已有ChemiQ的license，直接填进配置文件中全局设置的license参数即可。在设置完配置文件后，在终端输入下面的命令行即可运行计算：
 
 .. code-block::
 
@@ -20,7 +20,7 @@
 
     - backend(str) : 设置执行计算的后端类型[CPU_SINGLE_THREAD]。目前仅支持单线程CPU，更多后端类型的接入还在进行中。
     
-    - license(str) : 设置授权序列号。请前往 `官网 <https://originqc.com.cn/product/zh/chemistryIntroduce?pid=57&bannerId=88>`_ 申请授权码。
+    - license(str) : 设置授权序列号。请前往 `本源量子商城 <https://mall.originqc.com.cn>`_ 购买获取。
     
    计算类型为PES时的必要参数:
 
