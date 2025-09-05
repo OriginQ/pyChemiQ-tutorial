@@ -22,8 +22,7 @@ Classes
    :return: void
 
 
-
-   .. py:function:: getExpectationValue(index, fcalls, task_index, qvec, hamiltonian, para, ansatz, extra_measure)
+   .. py:function:: get_expectation_value(index, fcalls, task_index, qvec, hamiltonian, para, ansatz, extra_measure)
 
    对线路进行测量得到哈密顿量期望值。
 
@@ -40,7 +39,7 @@ Classes
 
 
 
-   .. py:function:: getLossFuncValue(index, para, grad, iters, fcalls, pauli, qvec, ansatz)
+   .. py:function:: get_loss_func_value(index, para, grad, iters, fcalls, pauli, qvec, ansatz)
 
    得到损失函数的值。
 
@@ -55,6 +54,9 @@ Classes
 
    :return: 损失函数的值。dict类型。
 
+   .. py:function:: get_qstate()
+
+   :return: 输出最终的量子态，即优化结束后直接打印出2^N的向量。双精度浮点数数组。
 
 
    .. py:function:: get_energy_history()
@@ -79,15 +81,18 @@ Classes
 
       ansatz = UCC("UCCD",2,mapping_type,chemiq=chemiq)
       pauli = PauliOperator("Z0 Z1 ",0.1)
+      
       # 期望值函数与代价函数
       H = pauli.to_hamiltonian(True)
-      result1 = chemiq.getExpectationValue(0,0,0,chemiq.qvec,H,[0],ansatz,False)
-      result2 = chemiq.getLossFuncValue(0,[0],[0],0,0,pauli,chemiq.qvec,ansatz)
+      result1 = chemiq.get_expectation_value(0,0,0,chemiq.qvec,H,[0],ansatz,False)
+      result2 = chemiq.get_loss_func_value(0,[0],[0],0,0,pauli,chemiq.qvec,ansatz)
       energies = chemiq.get_energy_history()
+      qvec = chemiq.get_qstate()
 
       print(result1)
       print(result2)
       print(energies)
+      print(qvec)
 
 打印得到的结果为：
 
@@ -96,3 +101,4 @@ Classes
       0.1
       ('', 0.1)
       [0.1]
+      []
